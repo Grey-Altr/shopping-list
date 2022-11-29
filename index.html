@@ -32,30 +32,31 @@
     </head>
 
     <body>
-        <header class="page-header">
-            <img class="logo" src="/assets/html_css_js.png" alt="logo" />
-            <p class="title">Supabase Web App</p>
-            <nav>
-                <a href="/">Home</a>
-                <a id="sign-out-link" href="auth">Sign Out</a>
-            </nav>
+        <header>
+            <h1>Welcome to ShopList! 📜</h1>
+            <div class="gutter-right logo">
+                <button id="logout">Logout</button>
+            </div>
         </header>
 
         <main>
-            <form id="sign-in">
-                <h3>Sign In</h3>
-                <label>Email</label>
-                <input type="email" id="sign-in-email" />
-                <label>Password</label>
-                <input type="password" id="sign-in-password" />
-            </form>
-            <form id="sign-up">
-                <h3>Sign up</h3>
-                <label>Email</label>
-                <input type="email" id="sign-up-email" />
-                <label>Password</label>
-                <input type="password" id="sign-up-password" />
-            </form>
+            <section>
+                <form class="item-form">
+                    <label>
+                        Quantity:
+                        <input type="number" name="quantity" min="0" />
+                    </label>
+                    <label>
+                        Item:
+                        <input name="item" />
+                    </label>
+                    <button>Add item</button>
+                </form>
+                <ul class="list">
+                    <!-- list items go here -->
+                </ul>
+                <button class="delete">Delete list</button>
+            </section>
         </main>
     </body>
 </html>
