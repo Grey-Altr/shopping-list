@@ -10,7 +10,7 @@ export function getUser() {
 }
 
 export async function checkAuth() {
-    const user = getYser();
+    const user = getUser();
 
     if (!user) location.replace('../');
 }
@@ -41,19 +41,22 @@ export async function signOutUser() {
 
 /* Data functions */
 export async function getListItems() {
-    const response = await client.('shoplist').select().match({ user_id: client.auth.user().id });
+    const response = await client
+        .from('shoplist')
+        .select()
+        .match({ user_id: client.auth.user().id });
 
     return response;
 }
 
 export async function createListItem(item, quantity) {
     const response = await client.from('shoplist').insert([{ item, quantity }]);
-    
+
     return response;
 }
 
 export async function buyListItem(itemId) {
-    const response = await client.from('shoplist').update({ bought: true}).match({ id: itemId});
+    const response = await client.from('shoplist').update({ bought: true }).match({ id: itemId });
 
     return response;
 }
