@@ -9,6 +9,18 @@ export function getUser() {
     return client.auth.user();
 }
 
+export async function checkAuth() {
+    const user = getYser();
+
+    if (!user) location.replace('../');
+}
+
+export async function redirectIfLoggedIn() {
+    if (getUser()) {
+        location.replace('./list');
+    }
+}
+
 export async function signUpUser(email, password) {
     return await client.auth.signUp({
         email,
@@ -28,3 +40,26 @@ export async function signOutUser() {
 }
 
 /* Data functions */
+export async function getListItems() {
+    const response = await client.('shoplist').select().match({ user_id: client.auth.user().id });
+
+    return response;
+}
+
+export async function createListItem(item, quantity) {
+    const response = await client.from('shoplist').insert([{ item, quantity }]);
+    
+    return response;
+}
+
+export async function buyListItem(itemId) {
+    const response = await client.from('shoplist').update({ bought: true}).match({ id: itemId});
+
+    return response;
+}
+
+export async function deleteAllListItems() {
+    const response = await client.from('shopping').delete().match({ user_id: getUser().id });
+
+    return response;
+}
