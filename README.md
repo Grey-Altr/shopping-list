@@ -2,7 +2,7 @@
 
 ## List Page
 
-    - incorporate out Create functionality
+    - incorporate our Create functionality
         - form
             - inputs for name of item and the rating (1-10), and submit button
     - ul
