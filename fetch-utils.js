@@ -66,3 +66,7 @@ export async function deleteAllListItems() {
 
     return response;
 }
+
+function checkError({ data, error }) {
+    return error ? console.error(error) : data;
+}

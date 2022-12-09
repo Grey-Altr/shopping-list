@@ -11,26 +11,30 @@ const listEl = document.querySelector('.list');
 /* State */
 
 /* Events */
+window.addEventListener('load', async () => {
+    fetchAndDisplayList();
+});
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const data = new FormData(form);
-
-    const item = data.get('item');
     const quantity = data.get('quantity');
-
-    await createListItem(item, quantity);
+    const item = data.get('item');
 
     form.reset();
+
+    const newItem = await createListItem(quantity, item);
+    if (newItem) {
+        fetchAndDisplayList();
+    } else {
+        error.textContent = 'Something went wrong while adding to your shopping list';
+    }
 
     fetchAndDisplayList();
 });
 
 /* Display Functions */
-window.addEventListener('load', async () => {
-    fetchAndDisplayList();
-});
 
 async function fetchAndDisplayList() {
     const list = await getListItems();
