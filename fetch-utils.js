@@ -62,7 +62,7 @@ export async function buyListItem(itemId) {
 }
 
 export async function deleteAllListItems() {
-    const response = await client.from('shopping').delete().match({ user_id: getUser().id });
+    const response = await client.from('shoplist').delete().match({ user_id: getUser().id });
 
     return response;
 }
