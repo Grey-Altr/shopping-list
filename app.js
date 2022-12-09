@@ -1,7 +1,7 @@
 /* Imports */
 // this will check if we have a user and set signout link if it exists
 import './auth/user.js';
-import { buyListItem, createListItem, getListItems } from './fetch-utils.js';
+import { buyListItem, createListItem, deleteAllListItems, getListItems } from './fetch-utils.js';
 
 /* Get DOM Elements */
 const form = document.querySelector('.item-form');
@@ -28,30 +28,34 @@ form.addEventListener('submit', async (e) => {
 });
 
 /* Display Functions */
+window.addEventListener('load', async () => {
+    fetchAndDisplayList();
+});
+
 async function fetchAndDisplayList() {
     const list = await getListItems();
     listEl.textContent = '';
     for (let item of list) {
-        const listItemEl = document.createElement('li');
-
+        const listItemEl = document.createElement('p');
         listItemEl.classList.add('list-item');
+        listItemEl.textContent = `${item.quantity} ${item.item}`;
 
-        listItemEl.textContent = `${item.quantity}x ${item.item}`;
-
-        if (item.bought) {
+        if (item.complete) {
             listItemEl.classList.add('bought');
         } else {
             listItemEl.classList.add('not-bought');
             listItemEl.addEventListener('click', async () => {
                 await buyListItem(item.id);
+
                 fetchAndDisplayList();
             });
         }
-
         listEl.append(listItemEl);
     }
 }
 
-window.addEventListener('load', async () => {
-    fetchAndDisplayList();
+deleteButton.addEventListener('click', async () => {
+    await deleteAllListItems();
+
+    await fetchAndDisplayList();
 });
